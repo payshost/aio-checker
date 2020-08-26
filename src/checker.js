@@ -21,7 +21,7 @@ export default class Checker {
     let input = Deno.readTextFileSync("./input.txt").replace(/\r/g, "").split("\n");
 
     for(let line in input) {
-      if(input[line] !== "" && input[line].length > 3 && input[line].length < 16 && !new RegExp(/['-,.]/g).test(input[line])) {
+      if(input[line] !== "" && input[line].length >= 3 && input[line].length < 16 && !new RegExp(/['-,.]/g).test(input[line])) {
         set.add(input[line]);
       }
     }
