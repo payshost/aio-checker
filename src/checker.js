@@ -128,11 +128,11 @@ export default class Checker {
 
       if(!json.reference.error_message) {
         console.log(`🦕 - username: ${username} | status = available | type = ${this.type.toUpperCase()}`);
-        Deno.writeTextFileSync("./out/output-fortnite.txt", `${username}\n`, {append: true});
+        Deno.writeTextFileSync("./out/output-snapchat.txt", `${username}\n`, {append: true});
       } else {
         console.log(`🦕 - username: ${username} | status = taken | type = ${this.type.toUpperCase()}`);
       }
-    }).catch(() => {
+    }).catch(e => {
       this.checkSnapchatUsername(username);
     })
   }
