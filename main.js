@@ -9,7 +9,7 @@ import Checker from "./src/checker.js";
 
 /* Variables */
 let args = Deno.args;
-let types = ["steamid", "steamgroup", "fortnite"];
+let types = ["steamid", "steamgroup", "fortnite", "snapchat"];
 
 if(args.length > 0) {
   if(types.indexOf(args[0].toLowerCase()) !== -1) {

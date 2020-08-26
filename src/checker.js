@@ -8,7 +8,8 @@
 */
 
 /* Variables */
-let set = new Set(), i = 0;
+let set = new Set(),
+    i = 0;
 
 /* Checker Class */
 export default class Checker {
@@ -59,6 +60,16 @@ export default class Checker {
         }
         break;
       }
+      case "snapchat": {
+        for(let usr of set) {
+          setTimeout(() => {
+            this.checkSnapchatUsername(usr);
+          }, i * 25);
+
+          i++;
+        }
+        break;
+      }
     }
   }
 
@@ -87,7 +98,7 @@ export default class Checker {
       } else {
         console.log(`🦕 - url: ${url} | status = taken | type = ${this.type.toUpperCase()}`);
       }
-    }).catch(e => {
+    }).catch(() => {
       this.checkGroupURL(url);
     });
   }
@@ -103,5 +114,26 @@ export default class Checker {
         console.log(`🦕 - username: ${username} | status = taken | type = ${this.type.toUpperCase()}`);
       }
     });
+  }
+
+  checkSnapchatUsername(username) {
+    fetch(`https://accounts.snapchat.com/accounts/get_username_suggestions?requested_username=${username}&xsrf_token=PlEcin8s5H600toD4Swngg`, {
+      method: "POST",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:66.0) Gecko/20100101 Firefox/66.0",
+        "Cookie": "xsrf_token=PlEcin8s5H600toD4Swngg"
+      }
+    }).then(async r => {
+      let json = await r.json();
+
+      if(!json.reference.error_message) {
+        console.log(`🦕 - username: ${username} | status = available | type = ${this.type.toUpperCase()}`);
+        Deno.writeTextFileSync("./out/output-fortnite.txt", `${username}\n`, {append: true});
+      } else {
+        console.log(`🦕 - username: ${username} | status = taken | type = ${this.type.toUpperCase()}`);
+      }
+    }).catch(() => {
+      this.checkSnapchatUsername(username);
+    })
   }
 }
